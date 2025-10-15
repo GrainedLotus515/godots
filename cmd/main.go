@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/GrainedLotus515/godots/internal/config"
-	"github.com/GrainedLotus515/godots/internal/installer"
-	"github.com/GrainedLotus515/godots/internal/manifest"
-	"github.com/GrainedLotus515/godots/internal/ui"
+	"github.com/grainedlotus515/godots/internal/config"
+	"github.com/grainedlotus515/godots/internal/installer"
+	"github.com/grainedlotus515/godots/internal/manifest"
+	"github.com/grainedlotus515/godots/internal/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +24,7 @@ func main() {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "dotfiles-installer",
+	Use:   "godots",
 	Short: "A dotfiles installer for CachyOS",
 	Long:  `Manage your dotfiles with symlinks, backups, and hooks.`,
 }
