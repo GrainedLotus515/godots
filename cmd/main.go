@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/GrainedLotus515/dotfiles-installer/internal/config"
-	"github.com/GrainedLotus515/dotfiles-installer/internal/installer"
-	"github.com/GrainedLotus515/dotfiles-installer/internal/manifest"
-	"github.com/GrainedLotus515/dotfiles-installer/internal/ui"
+	"github.com/GrainedLotus515/godots/internal/config"
+	"github.com/GrainedLotus515/godots/internal/installer"
+	"github.com/GrainedLotus515/godots/internal/manifest"
+	"github.com/GrainedLotus515/godots/internal/ui"
 	"github.com/spf13/cobra"
 )
 

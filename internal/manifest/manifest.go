@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
-	"github.com/yourusername/dotfiles-installer/internal/installer"
+	"github.com/GrainedLotus515/godots/internal/installer"
 )
 
 type Manager struct {
