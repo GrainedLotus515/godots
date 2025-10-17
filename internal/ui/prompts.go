@@ -5,7 +5,7 @@ import (
 
 	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/grainedlotus515/godots/internal/installer"
+	"github.com/grainedlotus515/godotctl/internal/installer"
 )
 
 var (

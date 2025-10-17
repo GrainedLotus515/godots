@@ -1,4 +1,4 @@
-module github.com/grainedlotus515/godots
+module github.com/grainedlotus515/godotctl
 
 go 1.25.1
 

@@ -1,15 +1,15 @@
 # Maintainer: Your Name <your.email@example.com>
-pkgname=godots-git
-pkgver=r6.34f9ffc
+pkgname=godotctl-git
+pkgver=r7.baa0be3
 pkgrel=1
 pkgdesc="A fast, interactive dotfiles installer with symlink management and automatic backups (git version)"
 arch=('x86_64' 'aarch64' 'armv7h')
-url="https://github.com/grainedlotus515/godots"
+url="https://github.com/grainedlotus515/godotctl"
 license=('MIT')
 depends=('git')
 makedepends=('go')
-provides=('godots')
-conflicts=('godots')
+provides=('godotctl')
+conflicts=('godotctl')
 source=("${pkgname}::git+${url}.git")
 sha256sums=('SKIP')
 
@@ -26,7 +26,7 @@ build() {
 
     go build \
         -ldflags="-s -w -X main.version=${pkgver}" \
-        -o godots \
+        -o godotctl \
         ./cmd
 }
 
@@ -39,7 +39,7 @@ package() {
     cd "${srcdir}/${pkgname}"
 
     # Install binary
-    install -Dm755 godots "${pkgdir}/usr/bin/godots"
+    install -Dm755 godotctl "${pkgdir}/usr/bin/godotctl"
 
     # Install license
     install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"

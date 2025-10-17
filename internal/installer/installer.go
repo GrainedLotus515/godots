@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/grainedlotus515/godots/internal/config"
+	"github.com/grainedlotus515/godotctl/internal/config"
 )
 
 type Installer struct {

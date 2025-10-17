@@ -1,4 +1,4 @@
-# godots
+# godotctl
 
 A fast, interactive dotfiles installer built with Go and [Charmbracelet](https://github.com/charmbracelet).
 
@@ -16,36 +16,36 @@ A fast, interactive dotfiles installer built with Go and [Charmbracelet](https:/
 
 ### From Source
 ```bash
-git clone https://github.com/yourusername/godots
-cd godots
-go build -o godots
-sudo mv godots /usr/local/bin/
+git clone https://github.com/yourusername/godotctl
+cd godotctl
+go build -o godotctl ./cmd
+sudo mv godotctl /usr/local/bin/
 ```
 
 ### Quick Install Script
 ```bash
-curl -sSL https://raw.githubusercontent.com/yourusername/godots/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/yourusername/godotctl/main/install.sh | bash
 ```
 
 ## Quick Start
 ```bash
 # Install dotfiles from a repository
-godots install https://github.com/yourusername/dots
+godotctl install https://github.com/yourusername/dots
 
 # List installed repositories
-godots list
+godotctl list
 
 # Update all dotfiles
-godots update
+godotctl update
 
 # Update specific repository
-godots update my-dots
+godotctl update my-dots
 
 # Uninstall a repository
-godots uninstall my-dots
+godotctl uninstall my-dots
 
 # Set up automatic updates on system upgrade
-godots setup-hook
+godotctl setup-hook
 ```
 
 ## Repository Structure
@@ -71,13 +71,13 @@ dots/
 
 ## How It Works
 
-1. **Clone** - Repository is cloned to `~/.cache/godots/$reponame/`
+1. **Clone** - Repository is cloned to `~/.cache/godotctl/$reponame/`
 2. **Scan** - Discovers dotfiles structure (config/, local/, home/)
 3. **Select** - Interactive prompt to choose which groups to install
-4. **Backup** - Existing files are backed up to `~/.godots.backup/TIMESTAMP/`
+4. **Backup** - Existing files are backed up to `~/.godotctl.backup/TIMESTAMP/`
 5. **Symlink** - Creates symlinks from cache to appropriate locations
 6. **Hooks** - Optionally runs post-install scripts
-7. **Manifest** - Tracks installation in `~/.config/godots/manifest.toml`
+7. **Manifest** - Tracks installation in `~/.config/godotctl/manifest.toml`
 
 ## Commands
 
@@ -85,8 +85,8 @@ dots/
 
 Install dotfiles from a git repository.
 ```bash
-godots install <repository-url>
-godots install https://github.com/user/dots
+godotctl install <repository-url>
+godotctl install https://github.com/user/dots
 ```
 
 Options:
@@ -96,7 +96,7 @@ Options:
 
 List all installed dotfile repositories.
 ```bash
-godots list
+godotctl list
 ```
 
 ### update
@@ -104,17 +104,17 @@ godots list
 Update dotfiles from git repository.
 ```bash
 # Update all repositories
-godots update
+godotctl update
 
 # Update specific repository
-godots update my-dots
+godotctl update my-dots
 ```
 
 ### uninstall
 
 Remove a dotfiles repository.
 ```bash
-godots uninstall <repo-name>
+godotctl uninstall <repo-name>
 ```
 
 This will:
@@ -127,7 +127,7 @@ This will:
 
 Install pacman hook for automatic updates.
 ```bash
-godots setup-hook
+godotctl setup-hook
 ```
 
 After running this, your dotfiles will automatically update when you run `sudo pacman -Syu`.
@@ -136,14 +136,14 @@ After running this, your dotfiles will automatically update when you run `sudo p
 
 Print version information.
 ```bash
-godots version
+godotctl version
 ```
 
 ## Configuration
 
 ### Manifest File
 
-Installation state is tracked in `~/.config/godots/manifest.toml`:
+Installation state is tracked in `~/.config/godotctl/manifest.toml`:
 ```toml
 version = "1.0"
 
@@ -163,9 +163,9 @@ installed_groups = ["nvim", "zsh", "tmux"]
 
 ### Directory Structure
 ```
-~/.cache/godots/       # Cloned repositories
-~/.config/godots/      # Manifest and config
-~/.godots.backup/      # Timestamped backups
+~/.cache/godotctl/       # Cloned repositories
+~/.config/godotctl/      # Manifest and config
+~/.godotctl.backup/      # Timestamped backups
 ```
 
 ## Hooks
@@ -202,21 +202,21 @@ chmod +x hooks/*.sh
 
 ## Pacman Hook
 
-After running `godots setup-hook`, a pacman hook is created at:
-`~/.config/pacman/hooks/godots-update.hook`
+After running `godotctl setup-hook`, a pacman hook is created at:
+`~/.config/pacman/hooks/godotctl-update.hook`
 
-This hook runs `godots update --auto` after every system upgrade.
+This hook runs `godotctl update --auto` after every system upgrade.
 
 ## Examples
 
 ### Basic Installation
 ```bash
-$ godots install https://github.com/user/dots
+$ godotctl install https://github.com/user/dots
 
 ━━━ Installing Dotfiles ━━━
 ➜ Repository: https://github.com/user/dots
 ➜ Cloning repository...
-✓ Cloned to /home/user/.cache/godots/dots
+✓ Cloned to /home/user/.cache/godotctl/dots
 ➜ Scanning dotfiles...
 ✓ Found 8 configuration groups
 
@@ -228,7 +228,7 @@ $ godots install https://github.com/user/dots
 # Confirm backup? Yes
 
 ➜ Backing up existing files...
-✓ Backed up to /home/user/.godots.backup/2025-10-12_10-30-00
+✓ Backed up to /home/user/.godotctl.backup/2025-10-12_10-30-00
 ➜ Creating symlinks...
 ✓ Created 4 symlinks
 ➜ Found 2 post-install hooks
@@ -243,7 +243,7 @@ $ godots install https://github.com/user/dots
 
 ### Updating Dotfiles
 ```bash
-$ godots update
+$ godotctl update
 
 ➜ Updating my-dots...
 Already up to date.
@@ -252,7 +252,7 @@ Already up to date.
 
 ### Listing Installed Repos
 ```bash
-$ godots list
+$ godotctl list
 
 ━━━ Installed Dotfiles ━━━
 
@@ -266,7 +266,7 @@ $ godots list
 
 ### Building
 ```bash
-go build -o godots
+go build -o godotctl ./cmd
 ```
 
 ### Running Tests
@@ -276,7 +276,7 @@ go test ./...
 
 ### Project Structure
 ```
-godots/
+godotctl/
 ├── cmd/
 │   └── main.go              # CLI commands
 ├── internal/
@@ -319,15 +319,15 @@ chmod +x hooks/*.sh
 
 ### Backup Directory Full
 
-**Issue**: `.godots.backup` taking up space
+**Issue**: `.godotctl.backup` taking up space
 
 **Solution**: Old backups can be manually deleted
 ```bash
 # List backups
-ls -la ~/.godots.backup/
+ls -la ~/.godotctl.backup/
 
 # Remove old backups (keep recent ones)
-rm -rf ~/.godots.backup/2025-01-*
+rm -rf ~/.godotctl.backup/2025-01-*
 ```
 
 ### Pacman Hook Not Working
@@ -336,8 +336,8 @@ rm -rf ~/.godots.backup/2025-01-*
 
 **Solution**: Check hook is installed and permissions are correct
 ```bash
-ls -la ~/.config/pacman/hooks/godots-update.hook
-cat ~/.config/pacman/hooks/godots-update.hook
+ls -la ~/.config/pacman/hooks/godotctl-update.hook
+cat ~/.config/pacman/hooks/godotctl-update.hook
 ```
 
 ## Contributing
