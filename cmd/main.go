@@ -30,14 +30,14 @@ var rootCmd = &cobra.Command{
 }
 
 var installCmd = &cobra.Command{
-	Use:   "install [repository-url]",
-	Short: "Install dotfiles from a git repository",
+	Use:   "install [repository-url-or-path]",
+	Short: "Install dotfiles from a git repository or local directory",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		repoURL := args[0]
+		source := args[0]
 
 		ui.PrintHeader("Installing Dotfiles")
-		ui.PrintInfo(fmt.Sprintf("Repository: %s", repoURL))
+		ui.PrintInfo(fmt.Sprintf("Source: %s", source))
 
 		// Initialize configuration
 		cfg, err := config.New()
@@ -48,13 +48,13 @@ var installCmd = &cobra.Command{
 		// Initialize installer
 		inst := installer.New(cfg)
 
-		// Clone repository
-		ui.PrintInfo("Cloning repository...")
-		repoPath, repoName, err := inst.Clone(repoURL)
+		// Clone/copy repository
+		ui.PrintInfo("Preparing repository...")
+		repoPath, repoName, sourceType, err := inst.Clone(source)
 		if err != nil {
-			return fmt.Errorf("failed to clone repository: %w", err)
+			return fmt.Errorf("failed to prepare repository: %w", err)
 		}
-		ui.PrintSuccess(fmt.Sprintf("Cloned to %s", repoPath))
+		ui.PrintSuccess(fmt.Sprintf("Prepared at %s (type: %s)", repoPath, sourceType))
 
 		// Scan dotfiles structure
 		ui.PrintInfo("Scanning dotfiles...")
@@ -137,7 +137,7 @@ var installCmd = &cobra.Command{
 		// Save manifest
 		ui.PrintInfo("Saving installation manifest...")
 		man := manifest.New(cfg.ManifestPath)
-		if err := man.AddRepo(repoName, repoURL, repoPath, selectedGroups, symlinks); err != nil {
+		if err := man.AddRepo(repoName, source, repoPath, sourceType, selectedGroups, symlinks); err != nil {
 			return fmt.Errorf("failed to save manifest: %w", err)
 		}
 		ui.PrintSuccess("Manifest saved")
@@ -224,8 +224,8 @@ func updateRepo(cfg *config.Config, name string, repo manifest.RepoConfig) error
 
 	inst := installer.New(cfg)
 
-	// Git pull in cached repo
-	if err := inst.Update(repo.CachedAt); err != nil {
+	// Update cached repo based on source type
+	if err := inst.Update(repo.CachedAt, repo.SourceType); err != nil {
 		return err
 	}
 

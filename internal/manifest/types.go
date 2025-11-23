@@ -1,6 +1,10 @@
 package manifest
 
-import "time"
+import (
+	"time"
+
+	"github.com/grainedlotus515/godotctl/internal/installer"
+)
 
 type Manifest struct {
 	Version string                `toml:"version"`
@@ -8,10 +12,11 @@ type Manifest struct {
 }
 
 type RepoConfig struct {
-	URL             string            `toml:"url"`
-	CachedAt        string            `toml:"cached_at"`
-	InstalledAt     time.Time         `toml:"installed_at"`
-	LastUpdated     time.Time         `toml:"last_updated"`
-	InstalledGroups []string          `toml:"installed_groups"`
-	Symlinks        map[string]string `toml:"symlinks"`
+	URL             string                  `toml:"url"`
+	SourceType      installer.SourceType    `toml:"source_type"`
+	CachedAt        string                  `toml:"cached_at"`
+	InstalledAt     time.Time               `toml:"installed_at"`
+	LastUpdated     time.Time               `toml:"last_updated"`
+	InstalledGroups []string                `toml:"installed_groups"`
+	Symlinks        map[string]string       `toml:"symlinks"`
 }

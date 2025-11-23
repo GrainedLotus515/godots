@@ -50,7 +50,7 @@ func (m *Manager) Save(repos map[string]RepoConfig) error {
 	return encoder.Encode(manifest)
 }
 
-func (m *Manager) AddRepo(name, url, cachedAt string, groups []installer.DotfileGroup, symlinks map[string]string) error {
+func (m *Manager) AddRepo(name, url, cachedAt string, sourceType installer.SourceType, groups []installer.DotfileGroup, symlinks map[string]string) error {
 	repos, err := m.Load()
 	if err != nil {
 		return err
@@ -63,6 +63,7 @@ func (m *Manager) AddRepo(name, url, cachedAt string, groups []installer.Dotfile
 
 	repos[name] = RepoConfig{
 		URL:             url,
+		SourceType:      sourceType,
 		CachedAt:        cachedAt,
 		InstalledAt:     time.Now(),
 		LastUpdated:     time.Now(),
